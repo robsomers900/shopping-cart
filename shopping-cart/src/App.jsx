@@ -5,6 +5,23 @@ import {Link, Outlet} from "react-router-dom"
 
 function App() {
   const [count, setCount] = useState(0)
+  const [order, setOrder] = useState([])
+  const [cards, setCards] = useState([
+    {
+        item: "kettle",
+        name: "Kettle",
+        description: "Boils Water",
+        price: 10,
+        quantity: 0
+    },
+    {
+        item: "toaster",
+        name: "Toaster",
+        description: "Cooks Bread",
+        price: 15,
+        quantity: 0
+    }
+])
 
   return (
     <>
@@ -12,6 +29,9 @@ function App() {
         <ul>
           <li>
             <Link to="cart">Cart</Link>
+          </li>
+          <li>
+            {count}
           </li>
         </ul>
       </div>
@@ -28,7 +48,7 @@ function App() {
         </nav>
       </div>
       <div className='main-body'>
-        <Outlet />
+        <Outlet context={{count, setCount, cards, setCards}}/>
       </div>
     </>
   )
