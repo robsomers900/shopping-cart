@@ -1,7 +1,16 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState, createContext } from 'react'
 import './App.css'
 import Home from './home'
 import {Link, Outlet} from "react-router-dom"
+import Bottom from './bottom'
+
+export const ShopContext = createContext({
+  count: null, 
+  setCount: () => {}, 
+  cards: null, 
+  setCards: () => {}, 
+  productData: []
+})
 
 const useProduct = () => {
   const [productData, setProductData] = useState([])
@@ -86,31 +95,35 @@ function App() {
   }
   return (
     <>
-      <div className='topbar'>
-        <ul>
-          <li>
-            <Link to="cart">Cart</Link>
-          </li>
-          <li>
-            {count}
-          </li>
-        </ul>
-      </div>
-      <div className='sidebar'>
-        <nav>
+      <ShopContext.Provider  value = {{count, setCount, cards, setCards, productData}}>
+        <div className='topbar'>
           <ul>
-            <li>
-              <Link to="/">Home</Link>
-            </li>
             <li>
               <Link to="cart">Cart</Link>
             </li>
+            <li>
+              {count}
+            </li>
           </ul>
-        </nav>
-      </div>
-      <div className='main-body'>
-        <Outlet context={{count, setCount, cards, setCards, productData}}/>
-      </div>
+        </div>
+        <div className='sidebar'>
+          <nav>
+            <ul>
+              <li>
+                <Link to="/">Home</Link>
+              </li>
+              <li>
+                <Link to="cart">Cart</Link>
+              </li>
+            </ul>
+          </nav>
+        </div>
+        <div className='main-body'>
+          <Home />
+          {/* <Outlet context={{count, setCount, cards, setCards, productData}}/> */}
+        </div>
+        <Bottom />
+      </ShopContext.Provider>
     </>
   )
 }

@@ -1,6 +1,9 @@
+import { ShopContext } from './App';
 import './card.css'
+import { useContext } from 'react';
 
 function Card(props) {
+    const {count, setCount, cards, setCards} = useContext(ShopContext)
     const handleCartIncrease = () => {
         props.setCount(props.count + 1)
         props.setCards((prevCards) =>
@@ -36,6 +39,7 @@ function Card(props) {
 }
 
 function Cards(props){
+    const {count, setCount, cards, setCards} = useContext(ShopContext)
     return(
         <>
             {props.items.map((item)=>{
